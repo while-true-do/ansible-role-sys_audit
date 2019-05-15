@@ -1,0 +1,58 @@
+---
+# tasks file for while_true_do.srv_audit
+
+- name: Manage audit Packages
+  package:
+    name: "{{ wtd_sys_audit_package }}"
+    state: "{{ wtd_sys_audit_package_state }}"
+  become: true
+  tags:
+    - audit
+    - package
+    - security
+    - system
+
+- name: Manage auditd Service
+  service:
+    name: "{{ wtd_sys_audit_service }}"
+    state: "{{ wtd_sys_audit_service_state }}"
+    enabled: "{{ wtd_sys_audit_service_enabled }}"
+  become: true
+  when: ansible_virtualization_type != "docker"
+  tags:
+    - audit
+    - service
+    - security
+    - system
+
+- name: Manage audit Conf
+  template:
+    src: "audit.conf.j2"
+    dest: "/etc/audit/audit.conf"
+    owner: "root"
+    group: "root"
+    mode: 0640
+  become: true
+  notify: Restart auditd
+  tags:
+    - audit
+    - service
+    - configuration
+    - security
+    - system
+
+- name: Manage audit Rules
+  template:
+    src: "audit.rules.j2"
+    dest: "/etc/audit/rules.d/additional.rules"
+    owner: "root"
+    group: "root"
+    mode: 0600
+  become: true
+  notify: Restart auditd
+  tags:
+    - audit
+    - service
+    - configuration
+    - security
+    - system

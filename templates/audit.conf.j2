@@ -1,0 +1,56 @@
+#
+# {{ ansible_managed }}
+# This file controls the configuration of the audit daemon
+#
+local_events = {{ local_events|default('yes') }}
+write_logs = {{ write_logs|default('yes') }}
+log_file = {{ log_file|default('/var/log/audit/audit.log') }}
+log_group = {{ log_group|default('root') }}
+log_format = {{ log_format|default('ENRICHED') }}
+flush = {{ flush|default('INCREMENTAL_ASYNC') }}
+freq = {{ freq|default('50') }}
+max_log_file = {{ max_log_file|default('8') }}
+num_logs = {{ num_logs|default('5') }}
+priority_boost = {{ priority_boost|default('4') }}
+name_format = {{ name_format|default('NONE') }}
+{% if name is defined %}
+name = {{ name }}
+{% else %}
+##name = mydomain
+{% endif %}
+max_log_file_action = {{ max_log_file_action|default('ROTATE') }}
+space_left = {{ space_left|default('75') }}
+space_left_action = {{ space_left_action|default('SYSLOG') }}
+verify_email = {{ verify_email|default('yes') }}
+action_mail_acct = {{ action_mail_acct|default('root') }}
+admin_space_left = {{ admin_space_left|default('50') }}
+admin_space_left_action = {{ admin_space_left_action|default('SUSPEND') }}
+disk_full_action = {{ disk_full_action|default('SUSPEND') }}
+disk_error_action = {{ disk_error_action|default('SUSPEND') }}
+use_libwrap = {{ use_libwrap|default('yes') }}
+{% if tcp_listen_port is defined %}
+tcp_listen_port = {{ tcp_listen_port }}
+{% else %}
+##tcp_listen_port = 60
+{% endif %}
+tcp_listen_queue = {{ tcp_listen_queue|default('5') }}
+tcp_max_per_addr = {{ tcp_max_per_addr|default('1') }}
+{% if tcp_client_ports is defined %}
+tcp_client_ports = {{ tcp_client_ports }}
+{% else %}
+##tcp_client_ports = 1024-65535
+{% endif %}
+tcp_client_max_idle = {{ tcp_client_max_idle|default('0') }}
+transport = {{ transport|default('TCP') }}
+krb5_principal = {{ krb5_principal|default('auditd') }}
+{% if krb5_key_file is defined %}
+krb5_key_file = {{ krb5_key_file }}
+{% else %}
+##krb5_key_file = /etc/audit/audit.key
+{% endif %}
+distribute_network = {{ distribute_network|default('no') }}
+q_depth = {{ q_depth|default('400') }}
+overflow_action = {{ overflow_action|default('SYSLOG') }}
+max_restarts = {{ max_restarts|default('10') }}
+
+plugin_dir = /etc/audit/plugins.d

@@ -1,0 +1,14 @@
+---
+# handlers file for while_true_do.sys_audit
+
+- name: Restart auditd
+  service:
+    name: "{{ wtd_sys_audit_service }}"
+    state: "restarted"
+  become: true
+  when: ansible_virtualization_type != "docker"
+  tags:
+    - audit
+    - service
+    - configuration
+    - security
