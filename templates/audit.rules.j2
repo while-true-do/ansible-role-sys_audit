@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+# {{ ansible_managed | comment }}
 {% for rule in wtd_sys_audit_rules %}
 {{ rule }}
 {% endfor %}
