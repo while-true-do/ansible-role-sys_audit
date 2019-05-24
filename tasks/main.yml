@@ -12,19 +12,6 @@
     - security
     - system
 
-- name: Manage auditd Service
-  service:
-    name: "{{ wtd_sys_audit_service }}"
-    state: "{{ wtd_sys_audit_service_state }}"
-    enabled: "{{ wtd_sys_audit_service_enabled }}"
-  become: true
-  when: ansible_virtualization_type != "docker"
-  tags:
-    - audit
-    - service
-    - security
-    - system
-
 - name: Manage audit Conf
   template:
     src: "audit.conf.j2"
@@ -54,5 +41,19 @@
     - audit
     - service
     - configuration
+    - security
+    - system
+
+- name: Manage auditd Service
+  service:
+    name: "{{ wtd_sys_audit_service }}"
+    state: "{{ wtd_sys_audit_service_state }}"
+    enabled: "{{ wtd_sys_audit_service_enabled }}"
+  become: true
+  when:
+    - ansible_virtualization_type != "docker"
+  tags:
+    - audit
+    - service
     - security
     - system

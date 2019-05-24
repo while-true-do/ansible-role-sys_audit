@@ -65,61 +65,61 @@ git clone https://github.com/while-true-do/ansible-role-sys_audit.git while_true
 ---
 # defaults file for while_true_do.srv_audit
 
-# Package Management
+## Package Management
 wtd_sys_audit_package: "audit"
 # State can be present|latest|absent
 wtd_sys_audit_package_state: "present"
 
-# Service Management
+## Configuration Management
+# Consult 'man audit.conf' for detailed information
+wtd_sys_audit_conf: []
+# local_events: "yes"
+# write_logs: "yes"
+# log_file: "/var/log/audit/audit.log"
+# log_group: "root"
+# log_format: "ENRICHED"
+# flush: "INCREMENTAL_ASYNC"
+# freq: "50"
+# max_log_file: "8"
+# num_logs: "5"
+# priority_boost: "4"
+# name_format: "NONE"
+# name: "mydomain"
+# max_log_file_action: "ROTATE"
+# space_left: "75"
+# space_left_action: "SYSLOG"
+# verify_email: "yes"
+# action_mail_acct: "root"
+# admin_space_left: "50"
+# admin_space_left_action: "SUSPEND"
+# disk_full_action: "SUSPEND"
+# disk_error_action: "SUSPEND"
+# use_libwrap: "yes"
+# tcp_listen_port: "60"
+# tcp_listen_queue: "5"
+# tcp_max_per_addr: "1"
+# tcp_client_ports: "1024-65535"
+# tcp_client_max_idle: "0"
+# transport: "TCP"
+# krb5_principal: "auditd"
+# krb5_key_file: "/etc/audit/audit.key"
+# distribute_network: "no"
+# q_depth: "400"
+# overflow_action: "SYSLOG"
+# max_restarts: "10"
+
+# Consult 'man audit.rules' for detailed information
+# Examples in "/usr/share/doc/audit/rules/"
+wtd_sys_audit_rules: []
+# - "-w /etc/passwd -p wa -k passwd_changes"
+# - "-w /etc/selinux/ -p wa -k selinux_changes"
+# - "-w /sbin/insmod -p x -k module_insertion"
+
+## Service Management
 wtd_sys_audit_service: "auditd"
 # State can be started|stopped
 wtd_sys_audit_service_state: "started"
 wtd_sys_audit_service_enabled: true
-
-# Configuration Management
-# Consult 'man audit.conf' for detailed information
-wtd_sys_audit_conf:
-  local_events: "yes"
-  # write_logs: "yes"
-  # log_file: "/var/log/audit/audit.log"
-  # log_group: "root"
-  # log_format: "ENRICHED"
-  # flush: "INCREMENTAL_ASYNC"
-  # freq: "50"
-  # max_log_file: "8"
-  # num_logs: "5"
-  # priority_boost: "4"
-  # name_format: "NONE"
-  # name: "mydomain"
-  # max_log_file_action: "ROTATE"
-  # space_left: "75"
-  # space_left_action: "SYSLOG"
-  # verify_email: "yes"
-  # action_mail_acct: "root"
-  # admin_space_left: "50"
-  # admin_space_left_action: "SUSPEND"
-  # disk_full_action: "SUSPEND"
-  # disk_error_action: "SUSPEND"
-  # use_libwrap: "yes"
-  # tcp_listen_port: "60"
-  # tcp_listen_queue: "5"
-  # tcp_max_per_addr: "1"
-  # tcp_client_ports: "1024-65535"
-  # tcp_client_max_idle: "0"
-  # transport: "TCP"
-  # krb5_principal: "auditd"
-  # krb5_key_file: "/etc/audit/audit.key"
-  # distribute_network: "no"
-  # q_depth: "400"
-  # overflow_action: "SYSLOG"
-  # max_restarts: "10"
-  # plugin_dir: "/etc/audit/plugins.d"
-
-# Consult 'man audit.rules' for detailed information
-wtd_sys_audit_rules:
-  - rule
-  - rule
-  - rule
 ```
 
 ### Example Playbook
